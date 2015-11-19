@@ -8,49 +8,18 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
   });
 
   var flag1, flag2, flag3, flag4, flag5;
-  $('[name=nickName]').on('blur', function() {
-    var el = $(this);
-    var value = el.val();
-    if (value != '') {
-      $.ajax({
-        type: 'GET',
-        url: 'data/nickName.json',
-        // data:{
-        //   nickName:value
-        // }
-      }).success(function(data) {
-        if (data.result == false) { //被占用
-          el.next().show();
-          flag1 = false;
-        } else {
-          el.next().hide();
-          flag1 = true;
-        }
-      }).fail(function() {
-        alert('异常')
-      })
-    }
-  });
   ////
   $('[name=saveBasicInfo]').on('click', function() {
     //昵称
-    flag2 = v.regex({
-      el: $("[name='nickName']"),
-      reg: /^[\w]{6,20}$/
-    });
+  
     // 手机号
     flag3 = v.regex({
       el: $("[name='phoneNum']"),
       reg: /^[\d]{11}$/
     });
-    //email
-    flag4 = v.regex({
-      el: $('[name=email]'),
-      reg: /^[\w]+@[\w]+\.[\w]+$/
-    });
-    // flag5 = v.requireCheck($('[name=isStudent]'));
+    
 
-    if (flag1 && flag2 && flag3 && flag4) {
+    if (flag3 ) {
       $(this).prop('disabled', true);
       $.ajax({
         url: 'data/nickName.json',
@@ -149,24 +118,26 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       el: $('[name=goodprice]')
     });
     if (1 || (flag6 && flag7)) {
-      // console.log($('[name=updateGoods]').serialize())
-      // $.ajax({
-      //   data:{
-      //     // 'imgupdate1':$('[name=imgupdate1]').val(),
-      //     'goodname':$('[name=goodname]').val()
-      //   },
-      //   url:'Personal/update',
-      //   type:'POST'
-      // }).success(function(data){
-      //   console.log(data);
-      // })
-
+      // console.log()
+      var r ;
+      if($('[name=changeprice]').is(':checked')){
+         r = 1;
+      }else{
+        r = 0;
+      }
+      
       $.ajaxFileUpload({
         url: 'Personal/update', //你处理上传文件的服务端
         secureuri: false,
-        fileElementId: ['img1','img2'],
+        fileElementId: ['img1','img2','img3','img4','img5'],
         data:{
-          'goodname':$('[name=goodname]').val()
+          'goodname':$('[name=goodname]').val(),
+          'goodprice':$('[name=goodprice]').val(),
+          'changeprice':r,
+          'businesstype':$('[name=businesstype]:checked').val(),
+          'goodtype':$('[name=goodtype]:checked').val(),
+          'gooddetail':$('[name=gooddetail]').val(),
+          'owner':'xiaomie',
         },
         dataType: 'json',
         type:'POST',

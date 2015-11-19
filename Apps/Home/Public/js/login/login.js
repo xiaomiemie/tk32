@@ -12,11 +12,15 @@ define(['jquery', 'validate'], function($, validateForm) {
     if (flag1 && flag2) {
       $(this).prop('disabled', true);
       $.ajax({
-        url: '',
-        // data: {},
+        url: 'Login/login',
+        data: {
+          'nickname':$('[name=nickName]').val(),
+          'password':$('[name=password]').val()
+        },
         type: 'POST'
-      }).success(function(data) {
-        alert('登陆成功');
+      }).success(function(data){
+        console.log(data);
+        window.location.href="/tk32/index.php/Home/personal";
       }).fail(function() {
         alert('登陆异常')
       });

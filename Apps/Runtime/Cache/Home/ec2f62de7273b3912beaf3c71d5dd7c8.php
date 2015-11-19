@@ -35,19 +35,19 @@
             <div class="form-group">
               <label  class="col-sm-2 control-label">姓名</label>
               <div class="col-sm-10">
-                <input type="text" name="username" disabled class="form-control" placeholder="确保填写真实姓名"></div>
+                <input type="text" name="username" disabled class="form-control" ></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">密码</label>
               <div class="col-sm-10">
-                <input type="password" name='password' disabled class="form-control" placeholder="密码"></div>
+                <input type="password" name='password' disabled class="form-control" ></div>
             </div>
 
             <div class="form-group  has-feedback">
               <label class="col-sm-2 control-label">昵称</label>
               <div class="col-sm-10">
-                <input type="text" name='nickName'  class="form-control" placeholder='数字字母下划线(6-20位)'>
-                <span class='isUsed'>已被占用</span>
+                <input type="text" name='nickName' disabled class="form-control">
+                
               </div>
             </div>
 
@@ -88,33 +88,33 @@
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <label class="checkbox-inline" style="margin-right:30px;">
-                  <input type="checkbox" name="canChanged" checked />
+                  <input type="checkbox" name="changeprice" checked value='1'/>
                   可议价
                 </label>
 
                 <label class="radio-inline">
-                  <input type="radio" name="onlyRent"  value="onlyRent">转租</label>
+                  <input type="radio" name="businesstype"  value="0" >转租</label>
                 <label class="radio-inline">
-                  <input type="radio" name="onlyCell"  value="onlyCell">出售</label>
+                  <input type="radio" name="businesstype"  value="1">出售</label>
                 <label class="radio-inline">
-                  <input type="radio" name="rendAndCell" value="rendAndCell" checked>可租可卖</label>
+                  <input type="radio" name="businesstype" value="2" checked='true'>可租可卖</label>
               </div>
             </div>
             <div class="form-group">
               <label  class="col-sm-2 control-label">物品分类</label>
               <div class="col-sm-10">
                 <label class="radio-inline">
-                  <input type="radio" name="optionsRadios" value="option1" >服装饰品</label>
+                  <input type="radio" name="goodtype" value="0" >服装饰品</label>
                 <label class="radio-inline">
-                  <input type="radio" name="optionsRadios" value="option2" >零食水果</label>
+                  <input type="radio" name="goodtype" value="1" >零食水果</label>
                 <label class="radio-inline">
-                  <input type="radio" name="optionsRadios" value="option3" >生活娱乐</label>
+                  <input type="radio" name="goodtype" value="2" >生活娱乐</label>
                 <label class="radio-inline">
-                  <input type="radio" name="optionsRadios" value="option4" >学习用品</label>
+                  <input type="radio" name="goodtype" value="3" >学习用品</label>
                 <label class="radio-inline">
-                  <input type="radio" name="optionsRadios" value="option5" >电子产品</label>
+                  <input type="radio" name="goodtype" value="4" >电子产品</label>
                 <label class="radio-inline">
-                  <input type="radio" name="optionsRadios" value="option6" checked>其他</label>
+                  <input type="radio" name="goodtype" value="5" checked>其他</label>
               </div>
             </div>
             <div class="form-group">
@@ -140,15 +140,15 @@
             </div>
             <div class="form-group ">
               <div class="col-sm-offset-2 col-sm-10">
-                <input type="file" name='imgupdate3' class="form-control"></div>
+                <input type="file" id='img3' name='imgupdate3' class="form-control"></div>
             </div>
             <div class="form-group ">
               <div class="col-sm-offset-2 col-sm-10">
-                <input type="file" name='imgupdate4' class="form-control"></div>
+                <input type="file" id='img4' name='imgupdate4' class="form-control"></div>
             </div>
             <div class="form-group ">
               <div class="col-sm-offset-2 col-sm-10">
-                <input type="file" name='imgupdate5' class="form-control"></div>
+                <input type="file" id='img5' name='imgupdate5' class="form-control"></div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
@@ -172,7 +172,7 @@
         <a href="personal.html">个人中心</a>
       </li>
       <li>
-        <a href="#">登录</a>
+        <a href="#">登录<?php echo (session('nickname')); ?></a>
       </li>
       <li>
         <a href="register.html">注册</a>

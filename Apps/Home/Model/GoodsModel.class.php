@@ -2,7 +2,7 @@
 
 //user模型model
 
-namespace Model;
+namespace Home\Model;
 use Think\Model;
 
 //父类Model thinkpp/lib

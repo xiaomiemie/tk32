@@ -11,46 +11,44 @@ class PersonalController extends Controller {
     }
     
     public function update(){
-          
-         
-      $goods = M('goods');
-      // // $goods->realname = I(goodname);
-      // if(!empty($_POST)){
-     
-        if(!empty($_FILES)){
-          // $update=new Upload();
-          $upload = new \Think\Upload();// 实例化上传类
-         
-          
-          // $upload->maxSize   =     3145728 ;// 设置附件上传大小
-    // $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-    $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
-    $upload->savePath  =     ''; // 设置附件上传（子）目录
-    // 上传文件 
-    $info   =   $upload->upload();
-    if(!$info) {// 上传错误提示错误信息
-        // $this->error($upload->getError());
-        
-          $data['status'] = 1;
-      $data['info'] = 'info';
-      $data['content'] = $_FILES['imgupdate1'];
-     
-      $this->ajaxReturn('error','JSON');
-    }else{// 上传成功
-        // $this->success('上传成功！');
-      // $data['photo'] = $info[0]['savename'];
-      $this->ajaxReturn($info,'JSON');
-    }
     
+      $goods = M('goods');     
+        if(!empty($_FILES)){
+          $upload = new \Think\Upload();// 实例化上传类
+          // $upload->maxSize   =     3145728 ;// 设置附件上传大小
+          // $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+          $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
+          $upload->savePath  =''; // 设置附件上传（子）目录
+          // 上传文件 
+          $info   =   $upload->upload();
           
-          
-        
-          // $this->success();
+          if(!$info) {// 上传错误提示错误信息
+            $this->ajaxReturn('至少上传一张图片','JSON');
+          }else{// 上传成功
+            $data['goodname'] = I(goodname);              
+            $data['goodprice'] = I(goodprice);              
+            $data['changeprice'] = I(changeprice);              
+            $data['businesstype'] = I(businesstype);              
+            $data['goodtype'] = I(goodtype);
+            $data['owner']=I(owner);
+            $data['gooddetail']=I(gooddetail);
+           $data['status'] ='1';
+            $count = count($info);
+            for($i=1;$i<=$count;$i++){
+              $data['goodimg'.$i]=$info['imgupdate'.$i]['savepath'].$info['imgupdate'.$i]['savename'];
+            }
+            // $goods->goodimg1 = 
+            $res = $goods->add($data);
+            if($res){
+              $this->ajaxReturn('success','JSON');
+              // $this->ajaxReturn($_FILES,'JSON');
+            }else{
+              $this->ajaxReturn('数据库错误','JSON');
+            }              
+            
+          }
+    
         }
-        // $this->ajaxReturn('1',"新增成功！",1);
-        // $goods->create();//收集post表单数据
-        // $z = $goods->add();
-        // $this->ajaxReturn('ass',"新增成功！",1);
       
       
     }
