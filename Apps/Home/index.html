@@ -1,1 +1,29 @@
- 
+  <header class="header">
+    <span class="logo-name">租赁买卖信息网</span>
+    <ul class='nav-ul'>
+
+      <if condition="$Think.session.nickname neq ''">
+        <li class='loginnickName'>
+          {$Think.session.nickname}
+          <ul class="menu-ul">
+          
+            <li >
+              <a href="{:U('Personal/index')}">个人中心</a>
+            </li>
+            <li class="logoutbutton"><a href="{:U('Login/logout')}">退出</a></li>
+          </ul>
+        </li>
+        <elseif condition="1"/>  
+        <li style="width:50px">
+          <a href=" {:U('Login/index')}">登录</a>
+        </li>
+
+        <else/>  
+        <a href="{:U('Login/index')}">登录1</a>
+      </if>
+
+      <li style="width:30px">
+        <a href="{:U('Register/index')}">注册</a>
+      </li>
+    </ul>
+  </header>

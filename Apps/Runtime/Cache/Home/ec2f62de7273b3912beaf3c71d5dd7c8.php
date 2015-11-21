@@ -35,28 +35,26 @@
             <div class="form-group">
               <label  class="col-sm-2 control-label">姓名</label>
               <div class="col-sm-10">
-                <input type="text" name="username" disabled class="form-control" ></div>
+                <input type="text" name="username" disabled class="form-control" value="<?php echo (session('realname')); ?>"></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">密码</label>
               <div class="col-sm-10">
-                <input type="password" name='password' disabled class="form-control" ></div>
+                <input type="password" name='password' disabled class="form-control" value="<?php echo (session('password')); ?>"></div>
             </div>
 
             <div class="form-group  has-feedback">
               <label class="col-sm-2 control-label">昵称</label>
               <div class="col-sm-10">
-                <input type="text" name='nickName' disabled class="form-control">
-                
-              </div>
+                <input type="text" name='nickName' disabled class="form-control" value="<?php echo (session('nickname')); ?>"></div>
             </div>
 
             <div class="form-group  has-feedback">
               <label class="col-sm-2 control-label">手机号</label>
               <div class="col-sm-10">
-                <input type="text" name='phoneNum' class="form-control" placeholder="与您沟通的必要方式"></div>
+                <input type="text" name='phoneNum' class="form-control"  value="<?php echo (session('phonenum')); ?>"></div>
             </div>
-           
+
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" name='saveBasicInfo' class="btn btn-primary" style='width:200px;font-size:20px;'>保存</button>
@@ -151,8 +149,11 @@
                 <input type="file" id='img5' name='imgupdate5' class="form-control"></div>
             </div>
             <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
+              <div class="col-sm-offset-2 col-sm-5">
                 <button type="button" name='updateButton' class="btn btn-primary" style='width:200px;font-size:20px;'>上传</button>
+              </div>
+              <div class=" col-sm-5">
+                <button type="reset"  class="btn btn-primary" style='width:200px;font-size:20px;'>重置</button>
               </div>
             </div>
           </form>
@@ -162,20 +163,32 @@
       <!-- aaa --> </div>
 
   </div>
-  <div class="loading">
-    <img src="image/loading2.jpg"></div>
+  <div class="loading"></div>
   <!-- 头部信息 -->
   <header class="header">
     <span class="logo-name">租赁买卖信息网</span>
     <ul class='nav-ul'>
-      <li>
-        <a href="personal.html">个人中心</a>
-      </li>
-      <li>
-        <a href="#">登录<?php echo (session('nickname')); ?></a>
-      </li>
-      <li>
-        <a href="register.html">注册</a>
+
+      <?php if($_SESSION['nickname']!= ''): ?><li class='loginnickName'>
+          <?php echo (session('nickname')); ?>
+          <ul class="menu-ul">
+          
+            <li >
+              <a href="<?php echo U('Personal/index');?>">个人中心</a>
+            </li>
+            <li class="logoutbutton"><a href="<?php echo U('Login/logout');?>">退出</a></li>
+          </ul>
+        </li>
+        <?php elseif(1): ?>  
+        <li style="width:50px">
+          <a href=" <?php echo U('Login/index');?>">登录</a>
+        </li>
+
+        <?php else: ?>  
+        <a href="<?php echo U('Login/index');?>">登录1</a><?php endif; ?>
+
+      <li style="width:30px">
+        <a href="<?php echo U('Register/index');?>">注册</a>
       </li>
     </ul>
   </header>

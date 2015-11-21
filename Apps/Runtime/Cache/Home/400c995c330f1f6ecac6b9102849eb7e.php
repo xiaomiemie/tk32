@@ -3,12 +3,12 @@
 <head>
   <title>首页</title>
   <meta charset='utf-8'>
-  <link rel="stylesheet" type="text/css" href="/tk313/Apps/Public/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/tk313/Apps/Public/css/index.css">
-  <link rel="stylesheet" type="text/css" href="/tk313/Apps/Public/css/form.css">
-  <link rel="stylesheet" type="text/css" href="/tk313/Apps/Public/css/content.css">
-  <link rel="stylesheet" type="text/css" href="/tk313/Apps/Public/css/toolbar.css">
-  <script type="text/javascript" src="/tk313/Apps/Public/framework/require.js" data-main='/tk313/Apps/Public/js/index/indexapp'></script>
+  <link rel="stylesheet" type="text/css" href="/tk32/Apps/Home/Public/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/tk32/Apps/Home/Public/css/index.css">
+  <link rel="stylesheet" type="text/css" href="/tk32/Apps/Home/Public/css/form.css">
+  <link rel="stylesheet" type="text/css" href="/tk32/Apps/Home/Public/css/content.css">
+  <link rel="stylesheet" type="text/css" href="/tk32/Apps/Home/Public/css/toolbar.css">
+  <script type="text/javascript" src="/tk32/Apps/Home/Public/framework/require.js" data-main='/tk32/Apps/Home/Public/js/index/indexapp'></script>
   <!-- // <script type="text/javascript" src="framework/bootstrap.min.js"></script> -->
 </head>
 <body>
@@ -59,24 +59,37 @@
     </div>
 
 <div class="loading">
-  <img src="/tk313/Apps/Public/image/loading2.jpg">
+  <img src="/tk32/Apps/Home/Public/image/loading2.jpg">
 </div>
 <!--工具条-->
 <div class="toolbar">
   <span class="toolbar-item"></span>
 </div>
 <!-- 头部信息 -->
-  <header class="header">
+   <header class="header">
     <span class="logo-name">租赁买卖信息网</span>
     <ul class='nav-ul'>
-      <li>
-        <a href="/tk313/Apps/Public/personal.html" target="_blank">个人中心</a>
-      </li>
-      <li>
-        <a href="#">登录</a>
-      </li>
-      <li>
-        <a href="/tk313/Apps/Public/register.html">注册</a>
+
+      <?php if($_SESSION['nickname']!= ''): ?><li class='loginnickName'>
+          <?php echo (session('nickname')); ?>
+          <ul class="menu-ul">
+          
+            <li >
+              <a href="<?php echo U('Personal/index');?>">个人中心</a>
+            </li>
+            <li class="logoutbutton"><a href="<?php echo U('Login/logout');?>">退出</a></li>
+          </ul>
+        </li>
+        <?php elseif(1): ?>  
+        <li style="width:50px">
+          <a href=" <?php echo U('Login/index');?>">登录</a>
+        </li>
+
+        <?php else: ?>  
+        <a href="<?php echo U('Login/index');?>">登录1</a><?php endif; ?>
+
+      <li style="width:30px">
+        <a href="<?php echo U('Register/index');?>">注册</a>
       </li>
     </ul>
   </header>

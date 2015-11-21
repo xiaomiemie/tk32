@@ -4,43 +4,61 @@ namespace Home\Controller;
 use Think\Controller;
 
 class PersonalController extends Controller {
+  //1基本信息
     public function index(){
-      
-  // $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p></div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
-      $this->display('personal');
+      if(session('?nickname')){
+        $this->display('personal');
+      }else{
+        $this->show('<a href="{:U("Login/index")}">請先登錄</a>');
+      }      
+    }
+    //1、改变手机号
+    public function changePhoneNum(){
+      $user = M('User');
+      $nickname = session('nickname');
+      $data['phonenum']=I('phonenum');
+      $res = $user->where("nickname='$nickname'")->save($data); // 根据条件更新记录
+      if($res!== false){
+        $info='修改成功';
+      }else{
+        $info='修改失败';
+      }
+      $this->ajaxReturn($info,'JSON');
     }
     
+   //3.上传新货 
     public function update(){
-    
       $goods = M('goods');     
         if(!empty($_FILES)){
-          $upload = new \Think\Upload();// 实例化上传类
-          // $upload->maxSize   =     3145728 ;// 设置附件上传大小
-          // $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-          $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
-          $upload->savePath  =''; // 设置附件上传（子）目录
+
+          $config = array(
+            'rootPath' => 'Uploads',
+            'savePath' => '/../Apps/Home/Public/Uploads/',          
+            'exts' => array('jpg', 'gif', 'png', 'jpeg'),
+            );          
+          $upload = new \Think\Upload($config);// 实例化上传类
           // 上传文件 
           $info   =   $upload->upload();
-          
           if(!$info) {// 上传错误提示错误信息
             $this->ajaxReturn('至少上传一张图片','JSON');
           }else{// 上传成功
+          
             $data['goodname'] = I(goodname);              
             $data['goodprice'] = I(goodprice);              
             $data['changeprice'] = I(changeprice);              
             $data['businesstype'] = I(businesstype);              
             $data['goodtype'] = I(goodtype);
-            $data['owner']=I(owner);
+            $data['nickname']=session('nickname');
             $data['gooddetail']=I(gooddetail);
-           $data['status'] ='1';
+           $data['status'] =1;
             $count = count($info);
             for($i=1;$i<=$count;$i++){
-              $data['goodimg'.$i]=$info['imgupdate'.$i]['savepath'].$info['imgupdate'.$i]['savename'];
+              $data['goodimg'.$i]='__PUBLIC__/'.strstr($info['imgupdate1']['savepath'], "Uploads").$info['imgupdate'.$i]['savename'];
+              // $data['goodimg'.$i]='Uploads/'.$info['imgupdate'.$i]['savename'];
             }
-            // $goods->goodimg1 = 
             $res = $goods->add($data);
             if($res){
-              $this->ajaxReturn('success','JSON');
+              $this->ajaxReturn(session('nickname'),'JSON');
               // $this->ajaxReturn($_FILES,'JSON');
             }else{
               $this->ajaxReturn('数据库错误','JSON');

@@ -9,14 +9,14 @@
 </head>
 <body>
   <header class="topbar">
-    <a href='index.html' class="logo-link">
+    <a href='<?php echo U('Index/index');?>' class="logo-link">
       <!-- <img src=''/>
       -->
     川大租赁买卖信息共享网
     </a>
     <div class="login-link">
       <span>我已注册，现在就&nbsp;</span>
-      <a class="btn btn-default" href='index.html'>返回主页</a>
+      <a class="btn btn-default" href='<?php echo U("Index/index");?>'>返回主页</a>
     </div>
   </header>
 

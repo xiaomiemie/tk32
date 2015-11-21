@@ -28,8 +28,8 @@ define(['jquery', 'validate'], function($, validateForm) {
   });
   // v.requireText($('[name=realname]'))
   $('[type=button]').on('click', function() {
-
     flag1 = v.requireText($('[name=realname]'));
+    flag7 = v.requireText($('[name=nickName]'));
 
     flag2 = v.regex({
       el: $('[name=password]'),
@@ -40,28 +40,28 @@ define(['jquery', 'validate'], function($, validateForm) {
       reg: /^[\w]{6,20}$/
     });
 
-    flag7 = v.regex({
-      el: $("[name='nickName']"),
-      reg: /^[\w]{6,20}$/
-    });
+    // flag7 = v.regex({
+    //   el: $("[name='nickName']"),
+    //   reg: /^[\w]{6,20}$/
+    // });
     // 手机号
     flag8 = v.regex({
       el:$('[name=phoneNum]'),
       reg: /^[\d]{11}$/
     });
-
-
     flag4 = v.checkEqual($('[name=password]'), $('[name=passwordOK]'));
     flag5 = v.requireCheck($('[name=isAgree]'));
     if (flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7 && flag8) {
       $(this).prop('disabled', true);
-      // console.log($('[name=registerform]').serializeArray())
       $.ajax({
         url: 'Register/register',
-        data: $('[name=registerform]').serializeArray(),
-        // data:{
-        //   'realname':'xiaoming'
-        // },
+        // data: $('[name=registerform]').serializeArray(),
+        data:{
+          'realname':$('[name=realname]').val(),
+          'nickname':$('[name=nickName]').val(),
+          'password':$('[name=password]').val(),
+          'phonenum':$('[name=phoneNum]').val()
+        },
         type: 'POST'
       }).success(function(data) {
         console.log(data);

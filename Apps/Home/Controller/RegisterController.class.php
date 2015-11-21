@@ -9,7 +9,7 @@ class RegisterController extends Controller {
     }
     //昵称查重
     public function nickCheck(){
-      $data = I('get.nickName');
+      $data = I('get.nickname');
       $user = M('User');
       $info = $user -> where("nickname = '$data'")->select();
       $res=true;
@@ -21,11 +21,11 @@ class RegisterController extends Controller {
     //注册
     public function register(){
       // echo THINK_VERSION;
-      $user = M('user');
+      $user = M('User');
       $user->realname = I(realname);
-      $user->nickname = I(nickName);
+      $user->nickname = I(nickname);
       $user->password = I(password);
-      $user->phonenum = I(phoneNum);
+      $user->phonenum = I(phonenum);
       $res = $user->add();
       $data['status'] = 1;
       $data['info'] = 'info';
@@ -34,7 +34,7 @@ class RegisterController extends Controller {
       if ($res){
       // 成功后返回客户端新增的用户ID，并返回提示信息和操作状态
           // $this->ajaxReturn($res,"新增成功！",1);
-        $this->ajaxReturn($data,'JSON');
+        $this->ajaxReturn(I(nickname),'JSON');
        }else{
           // 错误后返回错误的操作状态和提示信息
           $this->ajaxReturn(0,"新增错误！",0);

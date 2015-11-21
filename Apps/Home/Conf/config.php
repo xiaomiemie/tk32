@@ -7,6 +7,15 @@ return array(
   // 'APP_GROUP_MODE' => '1', 
   // 'APP_GROUP_PATH' => 'Modules', 
   //模板文件后缀名 'TMPL_TEMPLATE_SUFFIX' => '.html'
+  // 'TMPL_ENGINE_TYPE'=>'Smarty',
+  // 'TMPL_ENGINE_CONFIG'=>array(
+  //   'caching'=>TRUE,
+  //   'template_dir'=>TMPL_PATH,
+  //   'compile_dir'=>TEMP_PATH,
+  //   'cache_dir'=>CACHE_PATH,
+  //   'left_delimiter'=>'{',
+  //   'right_delimiter'=>'}',
+  //   ),
   'URL_CASE_INSENSITIVE' =>true,
   'TMPL_PARSE_STRING' => array(
     '__PUBLIC__'=>__ROOT__.'/'.APP_NAME.'/Home/'.'Public'

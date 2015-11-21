@@ -12,18 +12,19 @@ class LoginController extends Controller {
       // $user = new \Home\Model\UserModel();  //这个也可以
       $res = $user->checkNamePwd(I(nickname),I(password));
       if($res==false){
-        $this->ajaxReturn('用户名或密码错误','JSON');
+        $this->ajaxReturn($res,'JSON');
       }else{
         session('nickname',$res['nickname']);
-        $this->ajaxReturn($res,'JSON');
-        //跳转页面 redirect();
-       
+        session('realname',$res['realname']);
+        session('password',$res['password']);
+        session('phonenum',$res['phonenum']);
+        $this->ajaxReturn($res,'JSON');      
       }
     }
     
     //退出
     public function logout(){
       session(null);
-      $this->redirect('Login/index');
+      $this->redirect('Index/index');
     }
 }

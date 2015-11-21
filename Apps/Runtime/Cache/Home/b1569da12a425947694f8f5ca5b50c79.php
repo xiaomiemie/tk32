@@ -14,7 +14,10 @@
       -->
     川大租赁买卖信息共享网
     </a>
-   
+   <div class="login-link">
+      <span>没账号?&nbsp;&nbsp;还不快去&nbsp;</span>
+      <a class="btn btn-default" href='<?php echo U('Register/index');?>'>注册</a>
+    </div>
   </header>
 
   <div class="main-reg">

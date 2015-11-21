@@ -6,27 +6,30 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
     e.preventDefault();
     $(this).tab('show');
   });
-
+///////退出登錄
+// $('.logoutbutton').on('click',function(){
+  
+// })
   var flag1, flag2, flag3, flag4, flag5;
   ////
   $('[name=saveBasicInfo]').on('click', function() {
-    //昵称
-  
     // 手机号
     flag3 = v.regex({
       el: $("[name='phoneNum']"),
       reg: /^[\d]{11}$/
     });
-    
-
     if (flag3 ) {
       $(this).prop('disabled', true);
       $.ajax({
-        url: 'data/nickName.json',
-        // data: {},
+        url: 'Personal/changePhoneNum',
+        data: {
+          "phonenum":$("[name='phoneNum']").val()
+        },
         type: 'POST'
       }).success(function(data) {
-        alert('注册成功');
+        $('[name=saveBasicInfo]').prop('disabled', false);
+        // console.log(data)
+        alert(data);
       }).fail(function() {
         alert('出现异常')
       });
@@ -117,8 +120,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       len: 10,
       el: $('[name=goodprice]')
     });
-    if (1 || (flag6 && flag7)) {
-      // console.log()
+    if (flag6 && flag7) {
       var r ;
       if($('[name=changeprice]').is(':checked')){
          r = 1;
@@ -136,8 +138,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
           'changeprice':r,
           'businesstype':$('[name=businesstype]:checked').val(),
           'goodtype':$('[name=goodtype]:checked').val(),
-          'gooddetail':$('[name=gooddetail]').val(),
-          'owner':'xiaomie',
+          'gooddetail':$('[name=gooddetail]').val()
         },
         dataType: 'json',
         type:'POST',
