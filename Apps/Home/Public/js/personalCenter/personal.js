@@ -6,24 +6,20 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
     e.preventDefault();
     $(this).tab('show');
   });
-///////退出登錄
-// $('.logoutbutton').on('click',function(){
-  
-// })
   var flag1, flag2, flag3, flag4, flag5;
-  ////
+   var mygoods;
   $('[name=saveBasicInfo]').on('click', function() {
     // 手机号
     flag3 = v.regex({
       el: $("[name='phoneNum']"),
       reg: /^[\d]{11}$/
     });
-    if (flag3 ) {
+    if (flag3) {
       $(this).prop('disabled', true);
       $.ajax({
         url: 'Personal/changePhoneNum',
         data: {
-          "phonenum":$("[name='phoneNum']").val()
+          "phonenum": $("[name='phoneNum']").val()
         },
         type: 'POST'
       }).success(function(data) {
@@ -36,60 +32,80 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
     }
 
   });
-
+ 
   //我的货单
   $('[href="#myGoods"]').on('click', function() {
-    var mygoods = new mygoodlist.myGoodList({
+    mygoods = new mygoodlist.myGoodList({
       el: $('#myGoods .goodlist'),
-      url: 'data/goodlist.json',
+      url: 'Personal/myGoodList',
       clearList: true
     });
   });
 
+  //重新上架ok
   $('#myGoods .goodlist').on('click', '.reupdate', function() {
-    var id = $(this).data('id');
-    $.ajax({
-      data: {
-        id: id,
-        status: 0
-      },
-      url: 'data/nickName.json',
-      type: 'GET'
-    }).success(function(data) {
-      console.log('重新上架');
-      $('[href="#myGoods"]').trigger('click');
-    }).fail(function() {
-      alert('异常');
-    })
-  });
-  $('#myGoods .goodlist').on('click', '.temporary', function() {
+    var that = this;
+    var parentli = $(this).parents('li');
     var id = $(this).data('id');
     $.ajax({
       data: {
         id: id,
         status: 1
       },
-      url: 'data/nickName.json',
-      type: 'GET'
+      url: 'Personal/upGood',
+      type: 'POST'
     }).success(function(data) {
-      console.log('暂时下架');
-      $('[href="#myGoods"]').trigger('click');
+      if (data) {
+        var x = mygoods.renderOne(data[0]);
+        parentli.replaceWith(x);
+      } else {
+        alert('操作异常')
+      }
     }).fail(function() {
       alert('异常');
     })
   });
+
+  //暂时下架OK
+  $('#myGoods .goodlist').on('click', '.temporary', function() {
+    var that = this;
+    var parentli = $(this).parents('li');
+    var id = $(this).data('id');
+    $.ajax({
+      data: {
+        id: id,
+        status: 0
+      },
+      url: 'Personal/underGood',
+      type: 'POST'
+    }).success(function(data) {
+      if (data) {
+        var x = mygoods.renderOne(data[0]);
+        parentli.replaceWith(x);
+      } else {
+        alert('操作异常')
+      }
+    }).fail(function() {
+      alert('异常');
+    })
+  });
+
+  //删除
   $('#myGoods .goodlist').on('click', '.permanent', function() {
+    var parentli = $(this).parents('li');
     var id = $(this).data('id');
     $.ajax({
       data: {
         id: id
-          // status: 1
       },
-      url: 'data/nickName.json',
-      type: 'GET'
+      url: 'Personal/delGood',
+      type: 'POST'
     }).success(function(data) {
-      console.log('永久删除');
-      $('[href="#myGoods"]').trigger('click');
+      if (data) {
+       parentli.remove();
+      } else {
+        alert('操作异常')
+      }
     }).fail(function() {
       alert('异常');
     })
@@ -97,12 +113,14 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
 
   //我的收藏
   $('[href="#myCollection"]').on('click', function() {
-    var mygoods = new loadlist.loadList({
+    var mycollection = new loadlist.loadList({
       el: $('#myCollection .goodlist'),
-      url: 'data/goodlist.json',
+      url: 'Personal/myCollection',
       clearList: true
     })
   });
+  
+  
   //上传新货
   var flag6, flag7;
   v.keyupLimit({
@@ -121,31 +139,31 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       el: $('[name=goodprice]')
     });
     if (flag6 && flag7) {
-      var r ;
-      if($('[name=changeprice]').is(':checked')){
-         r = 1;
-      }else{
+      var r;
+      if ($('[name=changeprice]').is(':checked')) {
+        r = 1;
+      } else {
         r = 0;
       }
-      
+
       $.ajaxFileUpload({
         url: 'Personal/update', //你处理上传文件的服务端
         secureuri: false,
-        fileElementId: ['img1','img2','img3','img4','img5'],
-        data:{
-          'goodname':$('[name=goodname]').val(),
-          'goodprice':$('[name=goodprice]').val(),
-          'changeprice':r,
-          'businesstype':$('[name=businesstype]:checked').val(),
-          'goodtype':$('[name=goodtype]:checked').val(),
-          'gooddetail':$('[name=gooddetail]').val()
+        fileElementId: ['img1', 'img2', 'img3', 'img4', 'img5'],
+        data: {
+          'goodname': $('[name=goodname]').val(),
+          'goodprice': $('[name=goodprice]').val(),
+          'changeprice': r,
+          'businesstype': $('[name=businesstype]:checked').val(),
+          'goodtype': $('[name=goodtype]:checked').val(),
+          'gooddetail': $('[name=gooddetail]').val()
         },
         dataType: 'json',
-        type:'POST',
+        type: 'POST',
         success: function(data) {
           console.log(JSON.parse(data));
         },
-        error:function(data){
+        error: function(data) {
           console.log(data)
         }
       })

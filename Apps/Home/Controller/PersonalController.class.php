@@ -26,6 +26,59 @@ class PersonalController extends Controller {
       $this->ajaxReturn($info,'JSON');
     }
     
+    //2.我的货单
+    public function myGoodList(){
+      
+      $goods = M('goods');
+      $nickname = session('nickname');
+      $list = $goods->where("nickname='$nickname'")->page(I('pageNum'),I('pageSize'))->select();
+      $count = $goods->where("nickname='$nickname'")->count();
+      $res['list']=$list;
+      $res['totalCount']=$count;
+      if($res){
+        $this->ajaxReturn($res,'JSON');
+      }else{
+        $this->ajaxReturn('异常','JSON');
+      }
+    }
+    //2.1 下架商品
+    public function underGood(){
+      $goods = M('goods');
+      $data['status']=I('status');
+      $id=I('id');
+      $res = $goods->where("good_id='$id'")->save($data);
+      if($res!==false){
+        $info=$goods->where("good_id='$id'")->select();
+        $this->ajaxReturn($info,'JSON');
+      }else{
+        $this->ajaxReturn('0','JSON');
+      }
+    }
+    // 2.2 商品上架
+    public function upGood(){
+      $goods = M('goods');
+      $data['status']=I('status');
+      $id=I('id');
+      $res = $goods->where("good_id='$id'")->save($data);
+      if($res!==false){
+        $info=$goods->where("good_id='$id'")->select();
+        $this->ajaxReturn($info,'JSON');
+      }else{
+        $this->ajaxReturn('0','JSON');
+      }
+    }
+    //2.3 删除商品
+    public function delGood(){
+      $goods = M('goods');
+      $id=I('id');
+      $res = $goods->where("good_id='$id'")->delete();
+       if($res){
+        $this->ajaxReturn($res,'JSON');
+      }else{
+        $this->ajaxReturn($res,'JSON');
+      }
+    }
+    
    //3.上传新货 
     public function update(){
       $goods = M('goods');     
@@ -42,7 +95,6 @@ class PersonalController extends Controller {
           if(!$info) {// 上传错误提示错误信息
             $this->ajaxReturn('至少上传一张图片','JSON');
           }else{// 上传成功
-          
             $data['goodname'] = I(goodname);              
             $data['goodprice'] = I(goodprice);              
             $data['changeprice'] = I(changeprice);              
@@ -53,13 +105,11 @@ class PersonalController extends Controller {
            $data['status'] =1;
             $count = count($info);
             for($i=1;$i<=$count;$i++){
-              $data['goodimg'.$i]='__PUBLIC__/'.strstr($info['imgupdate1']['savepath'], "Uploads").$info['imgupdate'.$i]['savename'];
-              // $data['goodimg'.$i]='Uploads/'.$info['imgupdate'.$i]['savename'];
+              $data['goodimg'.$i]=strstr($info['imgupdate1']['savepath'], "Uploads").$info['imgupdate'.$i]['savename'];
             }
             $res = $goods->add($data);
             if($res){
-              $this->ajaxReturn(session('nickname'),'JSON');
-              // $this->ajaxReturn($_FILES,'JSON');
+              $this->ajaxReturn('上传成功','JSON');
             }else{
               $this->ajaxReturn('数据库错误','JSON');
             }              
@@ -69,5 +119,12 @@ class PersonalController extends Controller {
         }
       
       
+    }
+    
+    //4 我的收藏
+    public function myCollection(){
+       $goods = M('Goods');
+       $nickname=session('nickname');
+       // $res = 
     }
 }

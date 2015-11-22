@@ -7,12 +7,12 @@ data:{
 */
 define(['jquery', 'loadingImg'], function($, loadingImg) {
   function myGoodList(opts) {
-    window.classname = Math.ceil(Math.random() * 10000)
+    window.classname = Math.ceil(Math.random() * 100000);
+    this.publicUrl = '/tk32/Apps/Home/Public/';
     this.c = 'class' + window.classname;
     this.opts = $.extend({}, myGoodList.DEFAULTS, opts);
     this.$el = this.opts.el;
-    this.pageNow = 0;
-    this.opts.data.pageNum = this.pageNow;
+    this.opts.data.pageNum =1;
     this.bindEvent();
     $('.' + this.c).trigger('click');
     if (this.opts.clearList) {
@@ -21,7 +21,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   };
 
   myGoodList.prototype.loadData = function() {
-    this.pageNow++;
+
     var that = this;
     var loading = new loadingImg.loadingImg({
       el: $('.loading'),
@@ -31,41 +31,42 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
       left: '0%'
     });
     loading.setPosition();
-    setTimeout(function() {
       $.ajax({
         type: 'GET',
-        // data:that.opts.data,
+        data:that.opts.data,
         url: that.opts.url
       }).success(function(data) {
+        that.opts.data.pageNum++;
         loading.hide();
-        that.render(data.data);
+        that.render(data.list);
         that.loadNext(data.totalCount);
       }).fail(function() {
         loading.hide();
       })
-    }, 800)
   };
 
   myGoodList.prototype.render = function(data) {
     var that = this;
+    var publicUrl=that.publicUrl;
     var len = data.length;
     var arr = [];
     if (len > 0) {
       for (var i = 0; i < len; i++) {
-        var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="' + data[i].src + '"><div class="caption">' +
-          '<h4 class="goodname">' + data[i].name;
-        if (data[i].status == 1) {
-          str = str + '<small>暂时下架</small>'
+        var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="'+publicUrl+data[i].goodimg1+'"><div class="caption">' +
+          '<h4 class="goodname"><a href="{:U}">' + data[i].goodname;
+        if (data[i].status == 0) {
+          str = str + '</a><small>暂时下架</small>'
+        }else{
+          str = str + '</a>';
         }
-
-        str = str + '</h4><p class="gooddetail">' + data[i].detail + '</p><p> ';
-        if (data[i].status == 1) {
-          str = str + ' <a href="#" class="btn btn-info reupdate" role="button" data-status="' + data[i].status + '" data-id="' + data[i].id + '">重新上架</a>&nbsp;';
+        str = str + '</h4><p class="gooddetail">' + data[i].gooddetail + '</p><p> ';
+        if (data[i].status == 0) {
+          str = str + ' <a href="#" class="btn btn-info reupdate" role="button" data-status="' + data[i].status + '" data-id="' + data[i].good_id + '">重新上架</a>&nbsp;';
         } else {
-          str = str + ' <a href="#" class="btn btn-info temporary" role="button" data-status="' + data[i].status + '" data-id="' + data[i].id + '">暂时下架</a>&nbsp;';
+          str = str + ' <a href="#" class="btn btn-info temporary" role="button" data-status="' + data[i].status + '" data-id="' + data[i].good_id + '">暂时下架</a>&nbsp;';
 
         }
-        str = str + '<a href="#" class="btn btn-danger permanent" role="button" data-id="' + data[i].id + '">永久下架</a></p></div></div></li>';
+        str = str + '<a href="#" class="btn btn-danger permanent" role="button" data-id="' + data[i].good_id + '">永久下架</a></p></div></div></li>';
         arr.push(str);
       }
     } else {
@@ -76,12 +77,33 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   };
 
   myGoodList.prototype.loadNext = function(num) {
-    if (Math.ceil(num / (this.opts.data.pageSize)) > this.pageNow) {
+    if (Math.ceil(num / (this.opts.data.pageSize)) >= this.opts.data.pageNum) {
       $('.' + this.c).show();
     } else {
       $('.' + this.c).hide();
     }
   };
+  
+  myGoodList.prototype.renderOne=function(info){
+        var publicUrl=this.publicUrl;
+     var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="'+publicUrl+info.goodimg1+'"><div class="caption">' +
+          '<h4 class="goodname"><a href="#">' + info.goodname;
+        if (info.status == 0) {
+          str = str + '</a><small>暂时下架</small>'
+        }else{
+          str = str + '</a>';
+        }
+        str = str + '</h4><p class="gooddetail">' + info.gooddetail + '</p><p> ';
+        if (info.status == 0) {
+          str = str + ' <a href="#" class="btn btn-info reupdate" role="button" data-status="' + info.status + '" data-id="' + info.good_id + '">重新上架</a>&nbsp;';
+        } else {
+          str = str + ' <a href="#" class="btn btn-info temporary" role="button" data-status="' + info.status + '" data-id="' + info.good_id + '">暂时下架</a>&nbsp;';
+
+        }
+        str = str + '<a href="#" class="btn btn-danger permanent" role="button" data-id="' + info.good_id + '">永久下架</a></p></div></div></li>';
+        
+        return str;
+  }
 
   myGoodList.prototype.bindEvent = function() {
     var that = this;
@@ -98,7 +120,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   myGoodList.DEFAULTS = {
     clearList: false,
     data: {
-      pageSize: '20'
+      pageSize: '3'
     }
   };
 

@@ -21,9 +21,10 @@ define(['jquery', 'validate'], function($, validateForm) {
       }).success(function(data){
         console.log(data);
         if(data==false){
-          alert('用戶名或密碼不正確！')
+          alert('用戶名或密碼不正確！');
+        }else{
+          window.location.href="/tk32/index.php/Home/personal";
         }
-        window.location.href="/tk32/index.php/Home/personal";
       }).fail(function() {
         alert('登陆异常')
       });

@@ -11,6 +11,12 @@
   .personal .nav-tool .tab-content #myGoods {
     width: 90%;
     margin: 20px auto; }
+  .personal .nav-tool .tab-content .clearfloat:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0; }
   .personal .nav-tool .tab-content #myCollection {
     width: 90%;
     margin: 20px auto; }
@@ -26,7 +32,8 @@
   .personal .goodlist li {
     list-style: none;
     float: left;
-    width: 220px; }
+    width: 220px;
+    margin-left: 10px; }
     .personal .goodlist li small {
       font-size: 12px;
       margin-left: 10px;

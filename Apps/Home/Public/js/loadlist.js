@@ -7,12 +7,12 @@ data:{
 */
 define(['jquery', 'loadingImg'], function($, loadingImg) {
   function loadList(opts) {
-    window.classname = Math.ceil(Math.random() * 10000)
+    window.classname = Math.ceil(Math.random() * 10000);
     this.c = 'class' + window.classname;
+    this.publicUrl = '/tk32/Apps/Home/Public/';
     this.opts = $.extend({}, loadList.DEFAULTS, opts);
     this.$el = this.opts.el;
-    this.pageNow = 0;
-    this.opts.data.pageNum = this.pageNow;
+    this.opts.data.pageNum = 1;
     this.bindEvent();
     $('.' + this.c).trigger('click');
     if (this.opts.clearList) {
@@ -21,7 +21,6 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   };
 
   loadList.prototype.loadData = function() {
-    this.pageNow++;
     var that = this;
     var loading = new loadingImg.loadingImg({
       el: $('.loading'),
@@ -37,6 +36,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
         // data:that.opts.data,
         url: that.opts.url
       }).success(function(data) {
+        that.opts.data.pageNum++;
         loading.hide();
         that.render(data.data);
         that.loadNext(data.totalCount);
@@ -48,28 +48,30 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
 
   loadList.prototype.render = function(data) {
     var that = this;
+    var publicUrl = that.publicUrl;
     var len = data.length;
     var arr = [];
     if (len > 0) {
       for (var i = 0; i < len; i++) {
-        var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="' + data[i].src + '"><div class="caption">' +
-          '<h4 class="goodname">' + data[i].name  ;
-          if(data[i].status==1){
-            str=str+'<small>暂时下架</small>'
-          }
-          
-          str=str+'</h4><p class="gooddetail">' + data[i].detail + '</p></div></div></li>';
+        var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="' +publicUrl+ data[i].goodimg1 + '"><div class="caption">' +
+          '<h4 class="goodname"><a href="{:U('')}">' + data[i].goodname  ;
+          if(data[i].status==0){
+            str=str+'</a><small>暂时下架</small>'
+          }else{
+          str = str + '</a>';
+        }
+          str=str+'</h4><p class="gooddetail">' + data[i].gooddetail + '</p></div></div></li>';
         arr.push(str);
       }
     } else {
       var str = '<p>对不起，没有你想要的结果</p>';
       arr.push(str);
     }
-    that.$el.append(arr.join(''))
+    that.$el.append(arr.join(''));
   };
 
   loadList.prototype.loadNext = function(num) {
-    if (Math.ceil(num / (this.opts.data.pageSize)) > this.pageNow) {
+    if (Math.ceil(num / (this.opts.data.pageSize)) >= this.opts.data.pageNum) {
       $('.' + this.c).show();
     } else {
       $('.' + this.c).hide();
@@ -91,7 +93,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   loadList.DEFAULTS = {
     clearList: false,
     data: {
-      pageSize: '20'
+      pageSize: '3'
     }
   };
 

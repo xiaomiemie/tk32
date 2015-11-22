@@ -9,6 +9,34 @@
   <script type="text/javascript" src="/tk32/Apps/Home/Public/framework/require.js" data-main='/tk32/Apps/Home/Public/js/personalCenter/personalapp'></script>
 </head>
 <body>
+  <!-- 头部信息 -->
+  <header class="header">
+    <span class="logo-name">租赁买卖信息网</span>
+    <ul class='nav-ul'>
+
+      <?php if($_SESSION['nickname']!= ''): ?><li class='loginnickName'>
+          <?php echo (session('nickname')); ?>
+          <ul class="menu-ul">
+          
+            <li >
+              <a href="<?php echo U('Personal/index');?>">个人中心</a>
+            </li>
+            <li class="logoutbutton"><a href="<?php echo U('Login/logout');?>">退出</a></li>
+          </ul>
+        </li>
+        <?php elseif(1): ?>  
+        <li style="width:50px">
+          <a href=" <?php echo U('Login/index');?>">登录</a>
+        </li>
+
+        <?php else: ?>  
+        <a href="<?php echo U('Login/index');?>">登录1</a><?php endif; ?>
+
+      <li style="width:30px">
+        <a href="<?php echo U('Register/index');?>">注册</a>
+      </li>
+    </ul>
+  </header>
   <div class="personal">
     <div class="nav-tool">
       <!-- Nav tabs -->
@@ -63,11 +91,11 @@
           </form>
         </div>
         <!-- 我的货单 -->
-        <div role="tabpanel" class="tab-pane" id="myGoods">
+        <div role="tabpanel" class="tab-pane clearfloat" id="myGoods">
           <ul class="goodlist"></ul>
         </div>
         <!-- 我的收藏 -->
-        <div role="tabpanel" class="tab-pane" id="myCollection">
+        <div role="tabpanel" class="tab-pane clearfloat" id="myCollection">
           <ul class="goodlist"></ul>
         </div>
         <!-- 上传新货 -->
@@ -164,34 +192,8 @@
 
   </div>
   <div class="loading"></div>
-  <!-- 头部信息 -->
-  <header class="header">
-    <span class="logo-name">租赁买卖信息网</span>
-    <ul class='nav-ul'>
+  
 
-      <?php if($_SESSION['nickname']!= ''): ?><li class='loginnickName'>
-          <?php echo (session('nickname')); ?>
-          <ul class="menu-ul">
-          
-            <li >
-              <a href="<?php echo U('Personal/index');?>">个人中心</a>
-            </li>
-            <li class="logoutbutton"><a href="<?php echo U('Login/logout');?>">退出</a></li>
-          </ul>
-        </li>
-        <?php elseif(1): ?>  
-        <li style="width:50px">
-          <a href=" <?php echo U('Login/index');?>">登录</a>
-        </li>
-
-        <?php else: ?>  
-        <a href="<?php echo U('Login/index');?>">登录1</a><?php endif; ?>
-
-      <li style="width:30px">
-        <a href="<?php echo U('Register/index');?>">注册</a>
-      </li>
-    </ul>
-  </header>
   <footer style="text-align: center;font-size: 12px;color:#ccc;margin-top:50px;">2015©租赁买卖网</footer>
 
 </body>
