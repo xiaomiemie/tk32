@@ -36,6 +36,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
         data:that.opts.data,
         url: that.opts.url
       }).success(function(data) {
+        console.log(data)
         that.opts.data.pageNum++;
         loading.hide();
         that.render(data.list);
@@ -48,12 +49,12 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   myGoodList.prototype.render = function(data) {
     var that = this;
     var publicUrl=that.publicUrl;
-    var len = data.length;
     var arr = [];
-    if (len > 0) {
+    if (data) {
+      var len=data.length;
       for (var i = 0; i < len; i++) {
         var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="'+publicUrl+data[i].goodimg1+'"><div class="caption">' +
-          '<h4 class="goodname"><a href="{:U}">' + data[i].goodname;
+          '<h4 class="goodname"><a href="Item/index?id='+data[i].good_id+'">' + data[i].goodname;
         if (data[i].status == 0) {
           str = str + '</a><small>暂时下架</small>'
         }else{
@@ -87,7 +88,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   myGoodList.prototype.renderOne=function(info){
         var publicUrl=this.publicUrl;
      var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="'+publicUrl+info.goodimg1+'"><div class="caption">' +
-          '<h4 class="goodname"><a href="#">' + info.goodname;
+          '<h4 class="goodname"><a href="Item/index?id='+info.good_id+'">' + info.goodname;
         if (info.status == 0) {
           str = str + '</a><small>暂时下架</small>'
         }else{

@@ -4,7 +4,7 @@ define(['jquery'],function($){
       
       $.ajax({
         type:'GET',
-        url:'data/nickName.json'
+        // url:'data/nickName.json'
         // data:{}
       }).success(function(data){
         $('.favorite span').css('color','#F3B502');
@@ -19,7 +19,7 @@ define(['jquery'],function($){
     }else{
       $.ajax({
         type:'GET',
-        url:'data/nickName.json'
+        // url:'data/nickName.json'
         // data:{}
       }).success(function(data){
         $('.favorite span').css('color','#eee');

@@ -54,7 +54,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
     if (len > 0) {
       for (var i = 0; i < len; i++) {
         var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="' +publicUrl+ data[i].goodimg1 + '"><div class="caption">' +
-          '<h4 class="goodname"><a href="{:U('')}">' + data[i].goodname  ;
+          '<h4 class="goodname"><a href="Item/index?id='+data[i].good_id+'">' + data[i].goodname  ;
           if(data[i].status==0){
             str=str+'</a><small>暂时下架</small>'
           }else{

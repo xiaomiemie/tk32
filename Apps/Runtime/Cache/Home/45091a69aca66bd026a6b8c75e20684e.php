@@ -9,22 +9,37 @@
   <script type="text/javascript" src="/tk32/Apps/Home/Public/framework/require.js" data-main='/tk32/Apps/Home/Public/js/item/itemapp'></script>
 </head>
 <body>
+
 <div class="main-item">
     <div class="favorite"><span class="glyphicon glyphicon-star"></span>
     <div class="floatWord">点击收藏</div></div>
     
-  <h2 class="name">牛仔布鞋</h2>
-  <p class="price text-primary">¥20<span>可议价</span><span>出售</span></p>
-  <p class="owner text-primary"><span>杨</span>同学</p>
-  <p class="connect text-primary">联系方式：<span>15682566795</span></p>
-  <p class="detail text-primary">2015春秋冬新款韩版淑女中长款大衣小香风修身百搭毛呢裙摆风衣潮</p>
+  <h2 class="name"><?php echo ($res['content']['goodname']); ?></h2>
+  <p class="price text-primary"><?php echo ($res['content']['goodprice']); ?>
+  <span>
+    <?php if($res['content']['changeprice']){ ?>
+    可议价
+  <?php }else{ ?>
+  不接受议价<?php } ?>
+  </span>
+  <span>
+      <?php  $type = $res['content']['businesstype']; if($type==0){ ?>
+   转租
+  <?php }else if($type == 1){ ?>
+  出售<?php }else{ ?>
+  可转租可出售
+  <?php } ?>
+  </span>
+  </p>
+  <p class="owner text-primary"><span><?php echo substr($res['user']['realname'],0,3) ?></span>同学</p>
+  <p class="connect text-primary">联系方式：<span><?php echo ($res['user']['phonenum']); ?></span></p>
+  <p class="detail text-primary"><?php echo ($res['content']['gooddetail']); ?></p>
+<?php
+$len = count($res['imgs']); for($i=1;$i<=$len;$i++){ ?>
+  <p class="imgp"><img src="/tk32/Apps/Home/Public/<?php echo ($res['imgs'][$i]); ?>"></p>
+<?php } ?>
+  
 
-  <p class="imgp"><img src="image/cloth1.jpg"></p>
-  <p class="imgp"><img src="image/cloth2.jpg"></p>
-  <p class="imgp"><img src="image/cloth1.jpg"></p>
-  <p class="imgp"><img src="image/cloth3.jpg"></p>
-  <p class="imgp"><img src="image/cloth4.jpg"></p>
-  <p class="imgp"><img src="image/cloth5.jpg"></p>
 </div>
 
 

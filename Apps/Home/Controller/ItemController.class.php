@@ -4,8 +4,30 @@ namespace Home\Controller;
 use Think\Controller;
 class ItemController extends Controller {
     public function index(){
-  // $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p></div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
-    $this->display('item');
+      $id=$_GET['id'];
+      $good=M('goods');
+      $user=M('User');
+      $res = $good->where("good_id='$id'")->select();
+      $r=$res[0];
+      $nickname=$r['nickname'];
+      $u=$user->where("nickname='$nickname'")->select();
+      $info['content']=$r;
+      $info['user']=$u[0];
+      for($i=1;$i<6;$i++){
+        if($r['goodimg'.$i]){
+          $imgs[$i]=$r['goodimg'.$i];
+        }else{
+          break;
+        }
+      }
+      $info['imgs']=$imgs;
+      if($info){
+        // show_bug($info);
+        // $this->assign('res',$res);
+        $this->assign('res',$info);
+        $this->display('item');
+      }
+      
     }
     
 }
