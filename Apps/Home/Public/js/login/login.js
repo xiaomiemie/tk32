@@ -23,7 +23,7 @@ define(['jquery', 'validate'], function($, validateForm) {
         if(data==false){
           alert('用戶名或密碼不正確！');
         }else{
-          window.location.href="/tk32/index.php/Home/personal";
+          window.location.href="/tk32/index.php/Home/Index/index.html";
         }
       }).fail(function() {
         alert('登陆异常')

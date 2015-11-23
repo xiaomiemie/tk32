@@ -37,7 +37,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
   $('[href="#myGoods"]').on('click', function() {
     mygoods = new mygoodlist.myGoodList({
       el: $('#myGoods .goodlist'),
-      url: 'Personal/myGoodList',
+      url: 'myGoodList',
       clearList: true
     });
   });
@@ -52,7 +52,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
         id: id,
         status: 1
       },
-      url: 'Personal/upGood',
+      url: 'upGood',
       type: 'POST'
     }).success(function(data) {
       if (data) {
@@ -76,7 +76,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
         id: id,
         status: 0
       },
-      url: 'Personal/underGood',
+      url: 'underGood',
       type: 'POST'
     }).success(function(data) {
       if (data) {
@@ -98,7 +98,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       data: {
         id: id
       },
-      url: 'Personal/delGood',
+      url: 'delGood',
       type: 'POST'
     }).success(function(data) {
       if (data) {
@@ -115,7 +115,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
   $('[href="#myCollection"]').on('click', function() {
     var mycollection = new loadlist.loadList({
       el: $('#myCollection .goodlist'),
-      url: 'Personal/myCollection',
+      url: 'myCollection',
       clearList: true
     })
   });
@@ -147,7 +147,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       }
 
       $.ajaxFileUpload({
-        url: 'Personal/update', //你处理上传文件的服务端
+        url: 'update', //你处理上传文件的服务端
         secureuri: false,
         fileElementId: ['img1', 'img2', 'img3', 'img4', 'img5'],
         data: {
@@ -168,7 +168,6 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
         }
       })
     }
-    // console.log($('#updateGood form').serialize())
 
 
 

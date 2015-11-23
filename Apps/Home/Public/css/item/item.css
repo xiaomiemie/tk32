@@ -23,8 +23,11 @@
     top: 20px; }
     .main-item .favorite span {
       font-size: 40px;
-      cursor: pointer;
+      cursor: pointer; }
+    .main-item .favorite .starspan1 {
       color: #eee; }
+    .main-item .favorite .starspan2 {
+      color: #F3B502; }
   .main-item .imgp {
     text-align: center; }
     .main-item .imgp img {

@@ -1,8 +1,8 @@
   $toolbar-size:40px;
   @mixin toolbar-item($pos,$hoverPos){
-     background-position: 0 $pos;
+     background-position: -5px $pos;
     &:hover{
-      background-position:0 $hoverPos;
+      background-position:-5px $hoverPos;
     }
   }
    @mixin transition($transition){
@@ -12,19 +12,19 @@
     transition:$transition;
   }
 .toolbar{
-  position: fixed;
+    position: fixed;
     bottom:5px;
     right:5px;
     width: $toolbar-size;
     height:   $toolbar-size;
-    
+    cursor: pointer;
     .toolbar-item{
       display: block;
       width: $toolbar-size;
       height:   $toolbar-size;
       background-image:url(../image/toolbar.png);
       background-repeat:no-repeat;
-       @include toolbar-item(-674px , -736px);
+       @include toolbar-item(-680px , -740px);
        @include transition(background-position 0.5s linear)
       }
 }

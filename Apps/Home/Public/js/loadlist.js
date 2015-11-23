@@ -21,6 +21,7 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
   };
 
   loadList.prototype.loadData = function() {
+    console.log(this.opts)
     var that = this;
     var loading = new loadingImg.loadingImg({
       el: $('.loading'),
@@ -30,43 +31,49 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
       left: '0%'
     });
     loading.setPosition();
-    setTimeout(function() {
-      $.ajax({
-        type: 'GET',
-        // data:that.opts.data,
-        url: that.opts.url
-      }).success(function(data) {
+    $.ajax({
+      type: 'GET',
+      data: that.opts.data,
+      url: that.opts.url
+    }).success(function(data) {
+      console.log(data);
+      if (data) {
         that.opts.data.pageNum++;
         loading.hide();
         that.render(data.data);
         that.loadNext(data.totalCount);
-      }).fail(function() {
-        loading.hide();
-      })
-    }, 800)
+      } else {
+        alert('出现异常');
+      }
+    }).fail(function() {
+      loading.hide();
+      alert('出现异常');
+    })
   };
 
   loadList.prototype.render = function(data) {
     var that = this;
     var publicUrl = that.publicUrl;
-    var len = data.length;
-    var arr = [];
-    if (len > 0) {
-      for (var i = 0; i < len; i++) {
-        var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="' +publicUrl+ data[i].goodimg1 + '"><div class="caption">' +
-          '<h4 class="goodname"><a href="Item/index?id='+data[i].good_id+'">' + data[i].goodname  ;
-          if(data[i].status==0){
-            str=str+'</a><small>暂时下架</small>'
-          }else{
-          str = str + '</a>';
+     var arr = [];
+    if (data) {
+      var len = data.length;    
+        for (var i = 0; i < len; i++) {
+          var str = ' <li><div class="thumbnail"><img style="height:185px;" class="goodpicsmall" src="' + publicUrl + data[i].goodimg1 + '"><div class="caption">' +
+            '<h4 class="goodname"><a target="_blank" href="../Item/index?id=' + data[i].good_id + '">' + data[i].goodname;
+          if (data[i].status == 0) {
+            str = str + '</a><small>暂时下架</small>'
+          } else {
+            str = str + '</a>';
+          }
+          str = str + '</h4><p class="gooddetail">&nbsp;' + data[i].gooddetail + '</p></div></div></li>';
+          arr.push(str);
         }
-          str=str+'</h4><p class="gooddetail">' + data[i].gooddetail + '</p></div></div></li>';
+      
+    }else {
+        var str = '<p>对不起，没有你想要的结果</p>';
         arr.push(str);
       }
-    } else {
-      var str = '<p>对不起，没有你想要的结果</p>';
-      arr.push(str);
-    }
+
     that.$el.append(arr.join(''));
   };
 

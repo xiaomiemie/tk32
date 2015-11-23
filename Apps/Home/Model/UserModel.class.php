@@ -21,5 +21,13 @@ class UserModel extends Model{
     }
   }
   
+  function checkSession(){
+    if(session('?nickname')){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
   
 }

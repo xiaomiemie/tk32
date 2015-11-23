@@ -117,14 +117,30 @@ class PersonalController extends Controller {
           }
     
         }
-      
-      
     }
     
     //4 我的收藏
     public function myCollection(){
+      $Model =  D();
+      $pageNum=I('pageNum');
+      $pageSize=I('pageSize');
        $goods = M('Goods');
+       $col = M('collection');
        $nickname=session('nickname');
-       // $res = 
+        $datares = $col->where("nickname = '$nickname'")->page(I('pageNum'),I('pageSize'))->field('good_id')->select();      
+        $count=count($col->where("nickname = '$nickname'")->select());
+        $info['totalCount']=$count;
+        if($datares!==null){ //我的收藏不为空
+          $datares['_logic']='OR'; 
+          $res = $goods->where($datares)->select();
+           if($res!==false){ //查询具体商品没错
+            $info['data']=$res;
+            $this->ajaxReturn($info,'JSON');
+          }        
+        }else{  //为空
+          $info['data']=null;
+          $this->ajaxReturn($info,'JSON');
+        }
+        
     }
 }

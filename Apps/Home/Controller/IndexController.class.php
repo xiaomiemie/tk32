@@ -8,4 +8,21 @@ class IndexController extends Controller {
     $this->display();
     }
     
+    //type搜索
+    public function typeSelect(){
+      $good = M('goods');
+      $type=I('type');
+      $pageSize=I('pageSize');
+      $pageNum=I('pageNum');
+      $res = $good->where("goodtype='$type'")->order('good_id desc')->page($pageNum,$pageSize)->select();
+      $r=$good->where("goodtype='$type'")->select();
+      $info['totalCount']=count($r);    
+       if($res!==false){
+          $info['data']=$res;
+          $this->ajaxReturn($info,'JSON');
+       }else{
+        $this->ajaxReturn(0,'JSON');
+       }
+    }
+    
 }

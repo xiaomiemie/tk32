@@ -34,18 +34,18 @@
           <div class="panel-heading heading-text">快速入口</div>
           <div class="panel-body">
             <div class="list-group">
-              <a href="#" class="list-group-item" data-type="cloth">服装饰品</a>
-              <a href="#" class="list-group-item" data-type='food'>零食水果</a>
-              <a href="#" class="list-group-item" data-type='life'>生活娱乐</a>
-              <a href="#" class="list-group-item" data-type='study'>学习用品</a>
-              <a href="#" class="list-group-item" data-type='elec'>电子产品</a>
-              <a href="#" class="list-group-item" data-type='others'>其他</a>
+              <a href="#" class="list-group-item" data-type="0">服装饰品</a>
+              <a href="#" class="list-group-item" data-type='1'>零食水果</a>
+              <a href="#" class="list-group-item" data-type='2'>生活娱乐</a>
+              <a href="#" class="list-group-item" data-type='3'>学习用品</a>
+              <a href="#" class="list-group-item" data-type='4'>电子产品</a>
+              <a href="#" class="list-group-item" data-type='5'>其他</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="rightlist">
+      <div class="rightlist clearfloat">
 
         <ul class="goodlist">
         
@@ -75,7 +75,7 @@
           <ul class="menu-ul">
           
             <li >
-              <a href="<?php echo U('Personal/index');?>">个人中心</a>
+              <a target="_blank" href="<?php echo U('Personal/index');?>">个人中心</a>
             </li>
             <li class="logoutbutton"><a href="<?php echo U('Login/logout');?>">退出</a></li>
           </ul>

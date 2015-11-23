@@ -19,7 +19,7 @@
           <ul class="menu-ul">
           
             <li >
-              <a href="<?php echo U('Personal/index');?>">个人中心</a>
+              <a target="_blank" href="<?php echo U('Personal/index');?>">个人中心</a>
             </li>
             <li class="logoutbutton"><a href="<?php echo U('Login/logout');?>">退出</a></li>
           </ul>

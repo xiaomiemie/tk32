@@ -13,10 +13,10 @@ define(['jquery', 'loadlist'], function($, loadList) {
       $(this).addClass('active');
       var load = new loadList.loadList({
         el: $('.rightlist .goodlist'),
-        url: 'data/goodlist.json',
+        url: 'typeSelect',
         clearList: true,
         data: {
-          pageSize: '20',
+          pageSize: '3',
           type: type
         }
       })

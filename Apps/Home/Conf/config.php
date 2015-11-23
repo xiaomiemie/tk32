@@ -6,7 +6,8 @@ return array(
   // 'DEFAULT_GROUP' => 'Index', 
   // 'APP_GROUP_MODE' => '1', 
   // 'APP_GROUP_PATH' => 'Modules', 
-  //模板文件后缀名 'TMPL_TEMPLATE_SUFFIX' => '.html'
+  // 模板文件后缀名
+   'TMPL_TEMPLATE_SUFFIX' => '.html',
   // 'TMPL_ENGINE_TYPE'=>'Smarty',
   // 'TMPL_ENGINE_CONFIG'=>array(
   //   'caching'=>TRUE,
@@ -28,7 +29,7 @@ return array(
         'DB_PORT'   => 3306, // 端口
         'DB_PREFIX' => 'sw_', // 数据库表前缀 
         'DB_PORT' => '3306',
-        'DB_FIELDS_CACHE'=>true,
+        'DB_FIELDS_CACHE'=>false,
         'DB_CHARSET'=>'utf8'
 );
 ?>

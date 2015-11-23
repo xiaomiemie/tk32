@@ -8,6 +8,14 @@
   width: 90%;
   position:relative;
 }
+.clearfloat:after{
+      display:block;
+      clear:both;
+      content:"";
+      visibility:hidden;
+      height:0
+    }
+    
 .leftlist{
   height:500px;
   width: 100px;

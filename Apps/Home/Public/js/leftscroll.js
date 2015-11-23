@@ -14,7 +14,7 @@ define(['jquery'],function($){
       if(topNum>70){    
           $('.leftlist').css('top',topNum-70+'px')
       }else if(topNum<=70){
-        $('.leftlist').css('top',0)
+        $('.leftlist').css('top',0) //绝对定位于外层的div.content
       }
     })
   }

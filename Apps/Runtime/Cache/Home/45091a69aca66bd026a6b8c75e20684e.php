@@ -11,8 +11,16 @@
 <body>
 
 <div class="main-item">
-    <div class="favorite"><span class="glyphicon glyphicon-star"></span>
-    <div class="floatWord">点击收藏</div></div>
+    <div class="favorite">
+    <?php if($res['collection']){ ?>
+    <span class="glyphicon glyphicon-star starspan2" data-id="<?php echo ($res['content']['good_id']); ?>"></span>
+    <div class="floatWord">取消收藏</div>
+    <?php }else{ ?>
+    <span class="glyphicon glyphicon-star starspan1" data-id="<?php echo ($res['content']['good_id']); ?>"></span>
+    <div class="floatWord">点击收藏</div>
+    <?php } ?>
+    
+    </div>
     
   <h2 class="name"><?php echo ($res['content']['goodname']); ?></h2>
   <p class="price text-primary"><?php echo ($res['content']['goodprice']); ?>
@@ -42,10 +50,6 @@ $len = count($res['imgs']); for($i=1;$i<=$len;$i++){ ?>
 
 </div>
 
-
-
-
-
   <!-- 头部信息 -->
    <header class="header">
     <span class="logo-name">租赁买卖信息网</span>
@@ -56,7 +60,7 @@ $len = count($res['imgs']); for($i=1;$i<=$len;$i++){ ?>
           <ul class="menu-ul">
           
             <li >
-              <a href="<?php echo U('Personal/index');?>">个人中心</a>
+              <a target="_blank" href="<?php echo U('Personal/index');?>">个人中心</a>
             </li>
             <li class="logoutbutton"><a href="<?php echo U('Login/logout');?>">退出</a></li>
           </ul>

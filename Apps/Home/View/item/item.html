@@ -11,8 +11,16 @@
 <body>
 
 <div class="main-item">
-    <div class="favorite"><span class="glyphicon glyphicon-star"></span>
-    <div class="floatWord">点击收藏</div></div>
+    <div class="favorite">
+    <?php if($res['collection']){  ?>
+    <span class="glyphicon glyphicon-star starspan2" data-id="{$res['content']['good_id']}"></span>
+    <div class="floatWord">取消收藏</div>
+    <?php }else{ ?>
+    <span class="glyphicon glyphicon-star starspan1" data-id="{$res['content']['good_id']}"></span>
+    <div class="floatWord">点击收藏</div>
+    <?php } ?>
+    
+    </div>
     
   <h2 class="name">{$res['content']['goodname']}</h2>
   <p class="price text-primary">{$res['content']['goodprice']}
@@ -45,10 +53,6 @@ for($i=1;$i<=$len;$i++){
   
 
 </div>
-
-
-
-
 
   <!-- 头部信息 -->
  <include file="Apps/Home/index.html"/>
