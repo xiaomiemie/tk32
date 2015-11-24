@@ -9,14 +9,14 @@ class RegisterController extends Controller {
     }
     //昵称查重
     public function nickCheck(){
-      $data = I('get.nickname');
+      $data = I('nickName');
       $user = M('User');
       $info = $user -> where("nickname = '$data'")->select();
       $res=true;
       if($info!=null){
         $res=false;//被占用了
       }
-      $this->ajaxReturn($res, '表单数据保存成功！', 1);
+      $this->ajaxReturn($res, 'JSON');
     }
     //注册
     public function register(){

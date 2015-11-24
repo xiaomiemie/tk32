@@ -17,7 +17,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
     if (flag3) {
       $(this).prop('disabled', true);
       $.ajax({
-        url: 'Personal/changePhoneNum',
+        url: 'changePhoneNum',
         data: {
           "phonenum": $("[name='phoneNum']").val()
         },
@@ -101,9 +101,12 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       url: 'delGood',
       type: 'POST'
     }).success(function(data) {
-      if (data) {
+      console.log(data)
+      if (data==1) {
        parentli.remove();
-      } else {
+      } else if(data=='err'){
+        alert('请先登录')
+      }else{
         alert('操作异常')
       }
     }).fail(function() {
@@ -161,10 +164,10 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
         dataType: 'json',
         type: 'POST',
         success: function(data) {
-          console.log(JSON.parse(data));
+          alert(data);
         },
         error: function(data) {
-          console.log(data)
+          alert('操作异常');
         }
       })
     }

@@ -8,16 +8,17 @@ define(['jquery', 'validate'], function($, validateForm) {
     if (value != '') {
       $.ajax({
         type: 'GET',
-        url: 'Register/nickCheck',
+        url: 'nickCheck',
         data:{
           nickName:value
         }
       }).success(function(data) {
-        // console.log(data);
-        if (data.data == false) { //被占用
+        console.log(data)
+        if (data == false) { //被占用
           el.next().show();
           flag6 = false;
         } else {
+          console.log(data)
           el.next().hide();
           flag6 = true;
         }
@@ -30,7 +31,6 @@ define(['jquery', 'validate'], function($, validateForm) {
   $('[type=button]').on('click', function() {
     flag1 = v.requireText($('[name=realname]'));
     flag7 = v.requireText($('[name=nickName]'));
-
     flag2 = v.regex({
       el: $('[name=password]'),
       reg: /^[\w]{6,20}$/

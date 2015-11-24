@@ -20,7 +20,7 @@ define(['jquery'], function($) {
             $('.floatWord').css('opacity', '1').html('取消收藏')
           })
         } else if (data == 2) {
-          alert('您已收藏过该商品');
+          alert('请先登录');
         } else {
           alert('添加失败')
         }

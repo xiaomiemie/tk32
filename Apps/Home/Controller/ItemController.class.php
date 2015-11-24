@@ -67,7 +67,7 @@ class ItemController extends Controller {
         }
         $this->ajaxReturn($info,'JSON');
       }else{
-        $this->ajaxReturn('2','JSON');
+        $this->ajaxReturn('2','JSON');//没有登录
       }
  
     }

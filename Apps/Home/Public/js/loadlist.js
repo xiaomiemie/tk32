@@ -36,14 +36,13 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
       data: that.opts.data,
       url: that.opts.url
     }).success(function(data) {
-      console.log(data);
-      if (data) {
+      loading.hide();
+      if (data==1) {
+        alert('请先登录')
+      } else {
         that.opts.data.pageNum++;
-        loading.hide();
         that.render(data.data);
         that.loadNext(data.totalCount);
-      } else {
-        alert('出现异常');
       }
     }).fail(function() {
       loading.hide();
