@@ -21,12 +21,12 @@ class PersonalController extends Controller {
       $data['phonenum']=I('phonenum');
       $res = $user->where("nickname='$nickname'")->save($data); // 根据条件更新记录
       if($res!== false){
-        $info='修改成功';
+        $info='1';
       }else{
-        $info='修改失败';
+        $info='0';
       }
     }else{
-      $info='请先登录';
+      $info='err';
     }
       
       $this->ajaxReturn($info,'JSON');
@@ -69,7 +69,7 @@ class PersonalController extends Controller {
             $this->ajaxReturn('0','JSON');
           }
        }else{
-         $this->ajaxReturn('1','JSON');
+         $this->ajaxReturn('err','JSON');
        }
 
     }
@@ -89,7 +89,7 @@ class PersonalController extends Controller {
             $this->ajaxReturn('0','JSON');
           }
       }else{
-        $this->ajaxReturn('1','JSON');
+        $this->ajaxReturn('err','JSON');
       }
 
     }
@@ -144,14 +144,16 @@ class PersonalController extends Controller {
             }
             $res = $goods->add($data);
             if($res){
-              $this->ajaxReturn('上传成功','JSON');
+              $this->ajaxReturn('1','JSON');//成功
             }else{
-              $this->ajaxReturn('数据库错误','JSON');
+              $this->ajaxReturn('0','JSON');//失败
             }                         
           }   
+        }else{
+          $this->ajaxReturn('3','JSON');//至少传一张图
         }
       }else{
-        $this->ajaxReturn('请先登录','JSON');
+        $this->ajaxReturn('2','JSON');//没登陆
       }
       
     }

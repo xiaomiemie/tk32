@@ -36,9 +36,10 @@ define(['jquery', 'loadingImg'], function($, loadingImg) {
       data: that.opts.data,
       url: that.opts.url
     }).success(function(data) {
+      console.log(data)
       loading.hide();
       if (data==1) {
-        alert('请先登录')
+        alert('请先登录');
       } else {
         that.opts.data.pageNum++;
         that.render(data.data);

@@ -194,8 +194,8 @@ jQuery.extend({
                     data = data.substring(start + 1, end);
                 }
             }
-            // eval( "data = " + data );
-            eval("data = ''+data+'' ");
+            
+             eval("data = ''+data+'' ");
             // debugger
             // eval("data = \" "+data+" \" ")
         }

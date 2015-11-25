@@ -1,13 +1,10 @@
-define(['jquery', 'loadlist', 'scrollto', 'leftscroll', 'typeclick'], function($, loadList, scrollto, leftScroll, typeClick) {
-  
+define(['jquery', 'loadlist', 'scrollto', 'leftscroll', 'typeclick', 'message'], function($, loadList, scrollto, leftScroll, typeClick, Message) {
+
   var scrollto = new scrollto.scrollTo({
     el: $('.toolbar .toolbar-item')
   });
   scrollto.move();
-  // var load = new loadList.loadList({
-  //   url:'data/goodlist.json',
-  //   el:$('.rightlist .goodlist')//传入的是ul
-  // });
+
 
   //左边菜单栏
   var leftscroll = new leftScroll.leftScroll({
@@ -20,4 +17,21 @@ define(['jquery', 'loadlist', 'scrollto', 'leftscroll', 'typeclick'], function($
   });
   typeclick.bindEvent();
   typeclick.clickEvent();
+
+  //搜索框
+  $('#searchbutton').on('click', function() {
+    $('.list-group a').removeClass('active');
+    var type = $('#searchtype').val();
+    var keyvalue = $('#searchinput').val();
+    var load = new loadList.loadList({
+      url: 'search',
+      el: $('.rightlist .goodlist'),
+      clearList:true,
+      data:{
+        type:type,
+        keyvalue:keyvalue,
+        pageSize:3
+      } //传入的是ul
+    });
+  })
 })

@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileupload'], function($, b, validate, loadlist, mygoodlist, ajaxfileupload) {
+define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileupload', 'message', 'json2'], function($, b, validate, loadlist, mygoodlist, ajaxfileupload, Message, json2) {
 
   //基本信息
   var v = new validate.validateForm();
@@ -7,7 +7,7 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
     $(this).tab('show');
   });
   var flag1, flag2, flag3, flag4, flag5;
-   var mygoods;
+  var mygoods;
   $('[name=saveBasicInfo]').on('click', function() {
     // 手机号
     flag3 = v.regex({
@@ -25,14 +25,33 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       }).success(function(data) {
         $('[name=saveBasicInfo]').prop('disabled', false);
         // console.log(data)
-        alert(data);
+        if (data == 1) {
+          var mes = new Message.Message({
+            data: '修改成功',
+            type: 'alert-success'
+          });
+        } else if (data == 'err') {
+          var mes = new Message.Message({
+            data: '请先登录',
+            type: 'alert-warning'
+          });
+        } else {
+          var mes = new Message.Message({
+            data: '操作异常',
+            type: 'alert-danger'
+          });
+        }
+
       }).fail(function() {
-        alert('出现异常')
+        var mes = new Message.Message({
+          data: '操作异常',
+          type: 'alert-danger'
+        });
       });
     }
 
   });
- 
+
   //我的货单
   $('[href="#myGoods"]').on('click', function() {
     mygoods = new mygoodlist.myGoodList({
@@ -55,14 +74,30 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       url: 'upGood',
       type: 'POST'
     }).success(function(data) {
-      if (data) {
+      if (data == 'err') {
+        var mes = new Message.Message({
+          data: '请先登录',
+          type: 'alert-warning'
+        })
+      } else if (data == 0) {
+        var mes = new Message.Message({
+          data: '操作异常',
+          type: 'alert-danger'
+        });
+
+      } else {
+        var mes = new Message.Message({
+          data: '修改成功',
+          type: 'alert-success'
+        });
         var x = mygoods.renderOne(data[0]);
         parentli.replaceWith(x);
-      } else {
-        alert('操作异常')
       }
     }).fail(function() {
-      alert('异常');
+      var mes = new Message.Message({
+        data: '操作异常',
+        type: 'alert-danger'
+      });
     })
   });
 
@@ -79,14 +114,27 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       url: 'underGood',
       type: 'POST'
     }).success(function(data) {
-      if (data) {
+      if (data == 'err') {
+
+      } else if (data == 0) {
+        var mes = new Message.Message({
+          data: '操作异常',
+          type: 'alert-danger'
+        });
+
+      } else {
+        var mes = new Message.Message({
+          data: '修改成功',
+          type: 'alert-success'
+        });
         var x = mygoods.renderOne(data[0]);
         parentli.replaceWith(x);
-      } else {
-        alert('操作异常')
       }
     }).fail(function() {
-      alert('异常');
+      var mes = new Message.Message({
+        data: '操作异常',
+        type: 'alert-danger'
+      });
     })
   });
 
@@ -102,15 +150,30 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       type: 'POST'
     }).success(function(data) {
       console.log(data)
-      if (data==1) {
-       parentli.remove();
-      } else if(data=='err'){
-        alert('请先登录')
-      }else{
-        alert('操作异常')
+      if (data == 1) {
+        parentli.remove();
+        var mes = new Message.Message({
+          data: '删除成功',
+          type: 'alert-success'
+        });
+        var x = mygoods.renderOne(data[0]);
+        parentli.replaceWith(x);
+      } else if (data == 'err') {
+        var mes = new Message.Message({
+          data: '请先登录',
+          type: 'alert-warning'
+        });
+      } else {
+        var mes = new Message.Message({
+          data: '操作异常',
+          type: 'alert-danger'
+        });
       }
     }).fail(function() {
-      alert('异常');
+      var mes = new Message.Message({
+        data: '操作异常',
+        type: 'alert-danger'
+      });
     })
   })
 
@@ -122,8 +185,8 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
       clearList: true
     })
   });
-  
-  
+
+
   //上传新货
   var flag6, flag7;
   v.keyupLimit({
@@ -164,9 +227,33 @@ define(['jquery', 'bootstrap', 'validate', 'loadlist', 'mygoodlist', 'ajaxfileup
         dataType: 'json',
         type: 'POST',
         success: function(data) {
-          alert(data);
+          data=JSON.parse(data);
+          if (data == 1) {
+            var mes = new Message.Message({
+              data: '上传成功',
+              type: 'alert-success'
+            });
+          } else if (data == 2) {
+            var mes = new Message.Message({
+              data: '请先登录',
+              type: 'alert-warning'
+            });
+          } else if (data == 0) {
+            var mes = new Message.Message({
+              data: '操作异常',
+              type: 'alert-danger'
+            });
+          } else {
+            var mes = new Message.Message({
+              data: JSON.parse(data),
+              type: 'alert-warning'
+            });
+          }
+
         },
         error: function(data) {
+          console.log(data)
+
           alert('操作异常');
         }
       })

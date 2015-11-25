@@ -1,4 +1,4 @@
-define(['jquery', 'validate'], function($, validateForm) {
+define(['jquery', 'validate', 'message'], function($, validateForm, Message) {
 
   var v = new validateForm.validateForm();
   var flag1, flag2, flag3, flag4, flag5, flag6, flag7, flag8;
@@ -9,11 +9,11 @@ define(['jquery', 'validate'], function($, validateForm) {
       $.ajax({
         type: 'GET',
         url: 'nickCheck',
-        data:{
-          nickName:value
+        data: {
+          nickName: value
         }
       }).success(function(data) {
-        console.log(data)
+        console.log(data);
         if (data == false) { //被占用
           el.next().show();
           flag6 = false;
@@ -23,7 +23,10 @@ define(['jquery', 'validate'], function($, validateForm) {
           flag6 = true;
         }
       }).fail(function() {
-        alert('异常')
+        var mes = new Message.Message({
+          data: '出现异常',
+          type:'alert-danger'
+        });
       })
     }
   });
@@ -46,7 +49,7 @@ define(['jquery', 'validate'], function($, validateForm) {
     // });
     // 手机号
     flag8 = v.regex({
-      el:$('[name=phoneNum]'),
+      el: $('[name=phoneNum]'),
       reg: /^[\d]{11}$/
     });
     flag4 = v.checkEqual($('[name=password]'), $('[name=passwordOK]'));
@@ -56,18 +59,23 @@ define(['jquery', 'validate'], function($, validateForm) {
       $.ajax({
         url: 'Register/register',
         // data: $('[name=registerform]').serializeArray(),
-        data:{
-          'realname':$('[name=realname]').val(),
-          'nickname':$('[name=nickName]').val(),
-          'password':$('[name=password]').val(),
-          'phonenum':$('[name=phoneNum]').val()
+        data: {
+          'realname': $('[name=realname]').val(),
+          'nickname': $('[name=nickName]').val(),
+          'password': $('[name=password]').val(),
+          'phonenum': $('[name=phoneNum]').val()
         },
         type: 'POST'
       }).success(function(data) {
-        console.log(data);
-        alert('注册成功');
+        var mes = new Message.Message({
+          data: '注册成功',
+          type:'alert-success'
+        });
       }).fail(function() {
-        alert('出现异常')
+       var mes = new Message.Message({
+          data: '操作异常',
+          type:'alert-danger'
+        });
       });
     }
   })

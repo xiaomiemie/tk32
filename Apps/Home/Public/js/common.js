@@ -10,6 +10,9 @@ require.config({
     validate:'../validate',
     mygoodlist:'../mygoodlist',
     json2:'../../framework/json2',
-    ajaxfileupload:'../../framework/ajaxfileupload'
+    ajaxfileupload:'../../framework/ajaxfileupload',
+    message:'../message'
+    
+    
   }
 });
